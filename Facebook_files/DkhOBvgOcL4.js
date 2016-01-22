@@ -1,5 +1,0 @@
-/*!CK:3668137014!*//*1452559109,*/
-
-if (self.CavalryLogger) { CavalryLogger.start_js(["yiard"]); }
-
-__d('P2PSendMoneyNUXListItems.react',['Image.react','P2PListRow.react','P2PText.react','React','fbt','ix'],function a(b,c,d,e,f,g,h,i,j,k,l,m){'use strict';if(c.__markCompiled)c.__markCompiled();var n=k.createClass({displayName:'P2PSendMoneyNUXListItems',renderRow:function(o,p){return (k.createElement(i,{offset:'small'},k.createElement(h,o),k.createElement(j,{type:'primary'},p)));},render:function(){return (k.createElement('div',null,this.renderRow({height:18,src:m('/images/p2p/nux/nux_checkmark_small.png'),width:18},l._("It's FREE to send and receive money.")),this.renderRow({height:27,src:m('/images/p2p/nux/nux_lock_small.png'),width:18},l._("Industry-leading security \u2014 password protection, anti-fraud team and more.")),this.renderRow({height:13,src:m('/images/p2p/nux/nux_debitcard_small.png'),width:18},l._("Send money from your debit card to theirs."))));}});f.exports=n;},null);
