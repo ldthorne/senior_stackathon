@@ -13,12 +13,13 @@
   "content_scripts": [
     {
       "matches": ["http://www.facebook.com/*", "https://www.facebook.com/*"],
-      "js": ["jquery-2.2.0.min.js", "attrchange.js", "contentScript.js"]
+      "js": ["jquery-2.2.0.min.js", "contentScript.js"]
     }
   ],
   "web_accessible_resources": ["jquery.min.js"],
   "permissions": [
     "activeTab",
-    "https://ajax.googleapis.com/"
+    "https://ajax.googleapis.com/",
+    "storage"
   ]
 }

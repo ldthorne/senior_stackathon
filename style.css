@@ -1,0 +1,42 @@
+html, body{
+	min-width:300px;
+}
+
+
+#status {
+    /* avoid an excessively wide status text */
+    white-space: pre;
+    overflow: hidden;
+}
+
+
+#list{
+	float: left;
+	word-wrap:break-word
+}
+
+#buttons{
+	width: 15%;
+	float: right;
+}
+
+.delete-btns{
+	margin-bottom: 20%;
+}
+
+#deleteColumn{
+	float:right;
+}
+
+.btn-circular {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.42;
+  border-radius: 15px;
+  background-color: red;
+  float: right;
+  margin-right: 20%;
+}

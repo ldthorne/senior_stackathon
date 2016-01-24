@@ -1,36 +1,32 @@
 <!doctype html>
-<!--
- This page is shown when the extension button is clicked, because the
- "browser_action" field in manifest.json contains the "default_popup" key with
- value "popup.html".
- -->
 <html>
-  <head>
-    <title>Quick settings</title>
-    <style>
-      body {
-        font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
-        font-size: 100%;
-      }
-      #status {
-        /* avoid an excessively wide status text */
-        white-space: pre;
-        overflow: hidden;
-        max-width: 400px;
-      }
-    </style>
 
-    <!--
-      - JavaScript and HTML must be in separate files: see our Content Security
-      - Policy documentation[1] for details and explanation.
-      -
-      - [1]: https://developer.chrome.com/extensions/contentSecurityPolicy
-     -->
+<head>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <title>Settings</title>
+    <script src="jquery-2.2.0.min.js"></script>
     <script src="popup.js"></script>
-  </head>
-  <body>
-    <div id="status">HELLO WORLD</div>
-    <img id="image-result" hidden>
-  </body>
-</html>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
 
+<body>
+    <form name="form">
+        <h4 class="text-center">Input the name of a person you don't want to like:</h4>
+        <input type="text" id="name-entry">
+        <input type="button" class="btn" id="submit-button" value="Submit">
+    </form>
+    <div class="text-center">
+      <h4 id="js-response" class="text-danger"></h4>
+    </div>
+    <div  id="people">
+      <h4 class="text-center">People whose like buttons you're deleting:</h4> 
+      <div id="faux-table">
+        <div id="list">
+        </div>
+        <div id="buttons">
+        </div>
+      </div>
+    </div>
+</body>
+
+</html>
