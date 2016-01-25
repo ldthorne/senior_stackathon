@@ -3,7 +3,7 @@
 
   "name": "I don't 'like' my ex!",
   "description": "Removes ability to 'like' posts from specified users",
-  "version": "1.1",
+  "version": "1.2",
 
   "browser_action": {
     "default_icon": "icon.png",
