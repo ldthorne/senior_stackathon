@@ -1,50 +1,75 @@
 var people;
 $(document).ready(function(){
+    //when the DOM is loaded, grab data from local storage and, if there's a names array that has data inside it, call the deleteAllDomLikes function with those names  
 	chrome.storage.local.get(function(values){
-        people = JSON.parse(values.namesArr)
-        console.log(people)
-    	deleteAllDomLikes(people)
+        if(values.namesArr){
+            people = JSON.parse(values.namesArr)
+            // console.log(people)
+            if(people.length){
+                deleteAllDomLikes(people) 
+                
+            }
+        }
     })
 })
 
+
+//this function will continuously check the DOM for more elements to delete
 var currentHeight = $("#globalContainer").height();
+//gets the height of the div that contains all the data in the newsfeed when the page loads
+//when the page is scrolled on...
 $(document).on('scroll', function(event) {
-    var heightRn = $("#globalContainer").height();
+    //grab the current height
+    var heightRightNow = $("#globalContainer").height();
+    //if the current height is not equal to the height when the page was originally loaded it, then the div has extended and there's new content to be deleted (potentially)
     if (currentHeight !== $("#globalContainer").height()) {
-    	console.log('hello no people');
+        //grabs data from local storage
     	chrome.storage.local.get(function(values){
-	        people = JSON.parse(values.namesArr)
-	    	deleteAllDomLikes(people)
-        	currentHeight = heightRn;
+            if(values.namesArr){
+    	        people = JSON.parse(values.namesArr)
+    	    	if(people.length){
+                    //if there's stuff in the array, call the deleteAllDomLikes fn with the names
+                    deleteAllDomLikes(people)    
+                }
+            }
+            //sets the current height to height right now so the comparison of div heights can be done in the future 
+        	currentHeight = heightRightNow;
 	    })
     }
 })
 
+
+//adds an event listener which will listen for a message from popup.js. it's set up so that popup js will send a message when a new name is added to the array of people. if this receives a message, it checks the local storage and calls the delete function with the updated data 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-    	console.log("people added or removed from list")
+    	// console.log("people added or removed from list")
         chrome.storage.local.get(function(values){
-	        people = JSON.parse(values.namesArr)
-	        console.log("FROM CONTENT", people)
-	        deleteAllDomLikes(people)
+            if(values.namesArr){
+                people = JSON.parse(values.namesArr)
+                if(people.length){
+        	        deleteAllDomLikes(people)
+                }
+            }
 	    })
     }
 );
 
-
+//this function takes in a list of people that it needs to screen for and will recurse through the DOM to check for posts that they're in and, if they're in a post, delete the like button. the "_5pbw" class is the class that has the name of the people in the post. its parent, ".userContentWrapper" is a card on facebook that has the name of the person, the caption of the post/status update, and the like buttons. it has a child class ("._42nr"), which is the row of like, comment, and share buttons, which has a child of ".UFILikeLink", which is the like button. if facebook changes up the structure of its html at all, this program will break. this was all found by scrolling through a facebook page in html and looking for patterns from posts. 
 function deleteAllDomLikes(peopleToDelete) {
-    console.log(peopleToDelete)
+    // console.log(peopleToDelete)
     peopleToDelete.forEach(function(person) {
         person = person.toLowerCase();
         $("._5pbw").each(function() {
             var titleOfPost = $(this);
             var textOfPost = titleOfPost[0].innerText.toLowerCase();
+            //inner text contains the names people who posted/shared
+            //if the textOfPost contains the person we're looking for, find the like button and delete it by look at the parent and then the children.
             if (textOfPost.indexOf(person) > -1) {
-                console.log("true")
+                // console.log("true")
                 var wholePostCard = titleOfPost.parents(".userContentWrapper");
                 var likeButton = wholePostCard.find("._42nr").find(".UFILikeLink");
                 likeButton.remove();
-                console.log("removing because ", person)
+                // console.log("removing because ", person)
             }
         });
     })
