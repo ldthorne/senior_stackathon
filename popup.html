@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+
+<head>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <title>Settings</title>
+    <script src="jquery-2.2.0.min.js"></script>
+    <script src="popup.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <form class="text-center" name="form">
+        <h4 class="text-center">Input the name of a person whose posts you don't want to like exactly how it appears on Facebook:</h4>
+        <input type="text" id="name-entry">
+        <input type="button" class="btn" id="submit-button" value="Submit">
+    </form>
+    <div class="text-center">
+      <h4 id="js-response" class="text-danger"></h4>
+    </div>
+    <div id="people">
+      <h4 id="list-title" class="text-center"></h4> 
+        <div id="list">
+        </div>
+        <div id="buttons">
+        </div>
+    </div>
+</body>
+
+</html>
