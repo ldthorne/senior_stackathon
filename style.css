@@ -12,7 +12,8 @@ html, body{
 
 #list{
 	float: left;
-	word-wrap:break-word
+	word-wrap: break-word;
+  margin-left: 5%;
 }
 
 #buttons{
@@ -21,6 +22,7 @@ html, body{
 }
 
 .delete-btns{
+  margin-right: 5%;
 	margin-bottom: 20%;
 }
 

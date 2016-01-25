@@ -40,7 +40,7 @@ function deletePersonFromList(index) {
                 // Notify that we saved.
                 getListOfPeople();
                 $("#js-response").empty()
-                $("#js-response").append('Removed name from arr and saved');
+                $("#js-response").append('Removed name!');
             }
         );
     })
@@ -57,7 +57,7 @@ function getListOfPeople() {
             $("#list-title").empty().append("You haven't added anyone to the list yet. Add someone!");
             //if there are names...
         } else {
-            $("#list-title").empty().append("List of people whose like button we're deleting:")
+            $("#list-title").empty().append("List of people whose like buttons we're deleting:")
                 //empty the title of the list div
             $("#list").empty(); //empty the names
             $("#buttons").empty(); //empty the delete buttons
