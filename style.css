@@ -1,7 +1,17 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+
 html, body{
 	min-width:300px;
+  font-family: 'Roboto', sans-serif;
 }
 
+#name-entry{
+  height: 34px;
+}
+
+#body-stuff{
+  padding: 15px;
+}
 
 #status {
     /* avoid an excessively wide status text */
