@@ -1,3 +1,5 @@
+'use strict';
+
 $(document).ready(function() {
     //get the list of already blocked people
     getListOfPeople();
@@ -6,14 +8,14 @@ $(document).ready(function() {
         //when submit button is clicked, run the save button 
         saveChanges();
     });
-})
+});
 
 $(document).on('click', 'button', function(e) {
     var idx = $(e)[0].currentTarget.id;
     deletePersonFromList(idx);
     // console.log($("#" + idx))
-    $($(e)[0].currentTarget).remove()
-    $("#" + idx).remove()
+    $($(e)[0].currentTarget).remove();
+    $("#" + idx).remove();
     chrome.tabs.query({
         active: true,
         currentWindow: true
@@ -29,7 +31,7 @@ function deletePersonFromList(index) {
     // console.log("delete person from list being called on index", index)
     chrome.storage.local.get(function(values) {
         // console.log("DPFL getting vals", values)
-        namesArr = JSON.parse(values.namesArr);
+        const namesArr = JSON.parse(values.namesArr);
         namesArr.splice(index, 1);
         // console.log("DPFL modified values", namesArr)
 
@@ -39,11 +41,11 @@ function deletePersonFromList(index) {
             function() {
                 // Notify that we saved.
                 getListOfPeople();
-                $("#js-response").empty()
+                $("#js-response").empty();
                 $("#js-response").append('Removed name!');
             }
         );
-    })
+    });
 }
 
 function getListOfPeople() {
@@ -57,7 +59,7 @@ function getListOfPeople() {
             $("#list-title").empty().append("You haven't added anyone to the list yet. Add someone!");
             //if there are names...
         } else {
-            $("#list-title").empty().append("List of people whose like buttons we're deleting:")
+            $("#list-title").empty().append("List of people whose like buttons we're deleting:");
                 //empty the title of the list div
             $("#list").empty(); //empty the names
             $("#buttons").empty(); //empty the delete buttons
@@ -65,12 +67,12 @@ function getListOfPeople() {
                 //loop through each name and their name and a delete button to the div of people
                 //the delete button and name share the same id (their index), so it's easy to delete both
                 $("#list").append("<p id=" + index + ">" + name + "<br><br>");
-                $("#buttons").append('<button type="button" class="btn btn-circular btn-default delete-btns" id="' + index + '" aria-label="Left Align"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span><br><br>')
+                $("#buttons").append('<button type="button" class="btn btn-circular btn-default delete-btns" id="' + index + '" aria-label="Left Align"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span><br><br>');
             });
         }
         //send a message to content script to indicate that there's a new value in the namesArr
         sendMessageToContentScript();
-    })
+    });
 }
 
 //send a message to the content script, which has access to the DOM of the page
@@ -88,7 +90,7 @@ function sendMessageToContentScript() {
                 // console.log(response);
             });
         });
-    })
+    });
 }
 
 
@@ -96,8 +98,9 @@ function sendMessageToContentScript() {
 function saveChanges() {
     //clear the js-response div
     $("#js-response").empty();
+    $('#name-entry').empty();
     // get the value from the text input
-    var theValue = $("#name-entry").val()
+    const theValue = $("#name-entry").val();
     // error handling to see if they wrote a name before submission
     if (!theValue) {
         $("#js-response").append('No name specified!');
@@ -106,10 +109,10 @@ function saveChanges() {
         chrome.storage.local.get(function(values) {
             if (values.namesArr) {
                 //if there are names in local storage, parses them to change them from a string of an array of strings to just an array of strings
-                values.namesArr = JSON.parse(values.namesArr)
+                values.namesArr = JSON.parse(values.namesArr);
                 //checks to see if the name that was submitted is already in the namesArr
                 if (values.namesArr.indexOf(theValue) !== -1) {
-                    $("#js-response").append('You\'ve already entered that name!')
+                    $("#js-response").append('You\'ve already entered that name!');
                 } else {
                     //if it wasn't in the array, push that new name to the array and save it to local storage
                     values.namesArr.push(theValue);
@@ -126,18 +129,12 @@ function saveChanges() {
                 }
             } else {
                 //if there was no array of people in the local storage, it creates an array and pushes the name submitted to it, then saves the newly-created array to local storage
-                var namesArr = [];
-                var name = theValue;
-                namesArr.push(theValue)
-                chrome.storage.local.set({
-                        'namesArr': JSON.stringify(namesArr)
-                    },
-                    function() {
-                        getListOfPeople();
-                        $("#js-response").append('Created arr and saved');
-                    }
-                );
+                const namesArr = [theValue];
+                chrome.storage.local.set({'namesArr': JSON.stringify(namesArr)}, function() {
+                    getListOfPeople();
+                    $("#js-response").append('Created arr and saved');
+                });
             }
-        })
+        });
     }
 }
